@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Schedule</title>
+    <style>
+        body {
+            padding: 50px;
+            counter-reset: session;
+            max-width: 1100px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .day {
+            display: none;
+        }
+        .session {
+            margin-bottom:  1em;
+        }
+
+        @supports( display:grid ) {
+            @media screen and (min-width:700px) {
+                .schedule {
+                    display: grid;
+                }
+
+                .schedule::after {
+                    display: block;
+                    content: '';
+                    position: sticky;
+                    top: 0;
+                    grid-column: subject / -1;
+                    grid-row: days;
+                    z-index: 999;
+                    background-color: rgba(255,255,255,.9);
+                }
+                
+                .day {
+                    display: block;
+                    padding: 10px 5px 5px;
+                    position: sticky;
+                    top: 0; 
+                    z-index: 1000;
+                }
+                .session {
+                    margin: 0;
+                }
+            }
+        }
+
+        .schedule {
+            grid-gap: 1em;
+            grid-template-rows:
+                [days] auto
+                [time-0800] 1fr [time-0830] 1fr [time-0900] 1fr [time-0930] 1fr [time-1000] 1fr [time-1030] 1fr [time-1100] 1fr [time-1130] 1fr [time-1200] 1fr [time-1230] 1fr
+                [time-1300] 1fr [time-1330] 1fr [time-1400] 1fr [time-1430] 1fr [time-1500] 1fr [time-1530] 1fr [time-1600] 1fr [time-1630] 1fr [time-1700] 1fr;
+            grid-template-columns:
+                [times] 4em
+                [monday-start] 1fr
+                [monday-end tuesday-start] 1fr
+                [tuesday-end wednesday-start] 1fr
+                [wednesday-end thursday-start] 1fr
+                [thursday-end friday-start] 1fr
+                [friday-end saturday-start] 1fr
+                [saturday-end sunday-start] 1fr
+                [sunday-end];
+        }
+
+        .session {
+            padding: .5em;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        .subject,
+        .time {
+            margin: 0;
+            font-size: 1em;
+        }
+
+        body {
+            counter-reset: subject-count;
+        }
+        
+        .title::before {
+            counter-increment: subject-count;
+            content: 'Subject #' counter(subject-count) ': ';
+        }
+
+        .day,
+        .time {
+            font-weight: bold;
+            font-size:.75em;
+        }
+
+        span {
+            display: block;
+        }
+
+        .math { background-color: #11a5b0c9; color: #fff;}
+        .history { background-color: #687f00; color: #fff;}
+        .geography { background-color: #7f006e; color: #fff;}
+        .science { background-color: #544D69; color: #fff;}
+        .art { background-color: #c35500; color: #fff;}
+        .english { background-color: #15e68f; color: #fff;}
+        .spanish { background-color: #d1e615; color: #fff;}
+        .french { background-color: #ebb68e; color: #fff;}
+        .dramatics { background-color: #925825; color: #fff;}
+        .physicaleducation { background-color: #674c92; color: #fff;}
+        .woodshop { background-color: #6b00c2; color: #fff; }
+        .health { background-color: #24d613; color: #fff;}
+        .economics { background-color: #74756e; color: #fff;}
+
+        .breaks {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ccc;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="schedule"> 
+	
+        <!-- days -->
+        <span class="day" aria-hidden="true" style="grid-column: monday; grid-row: days;">Monday </span>
+        <span class="day" aria-hidden="true" style="grid-column: tuesday; grid-row: days;">Tuesday</span>
+        <span class="day" aria-hidden="true" style="grid-column: wednesday; grid-row: days;">Wednesday</span>
+        <span class="day" aria-hidden="true" style="grid-column: thursday; grid-row: days;">Thursday</span>
+        <span class="day" aria-hidden="true" style="grid-column: friday; grid-row: days;">Friday</span>
+        <span class="day" aria-hidden="true" style="grid-column: saturday; grid-row: days;">Saturday</span>
+        <span class="day" aria-hidden="true" style="grid-column: sunday; grid-row: days;">Sunday</span>
+    
+        <!-- time slots -->
+        <h2 class="time" style="grid-column: times; grid-row: time-0800;">8:00am</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-0830;">8:30am</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-0900;">9:00am</h2>    
+        <h2 class="time" style="grid-column: times; grid-row: time-0930;">9:30am</h2>   
+        <h2 class="time" style="grid-column: times; grid-row: time-1000;">10:00am</h2>    
+        <h2 class="time" style="grid-column: times; grid-row: time-1030;">10:30am</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1100;">11:00am</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1130;">11:30am</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1200;">12:00am</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1230;">12:30pm</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1300;">01:00pm</h2>       
+        <h2 class="time" style="grid-column: times; grid-row: time-1400;">02:00pm</h2>    
+        <h2 class="time" style="grid-column: times; grid-row: time-1430;">02:30pm</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1500;">03:00pm</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1530;">04:30pm</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1600;">04:00pm</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1630;">05:30pm</h2>
+        <h2 class="time" style="grid-column: times; grid-row: time-1700;">05:00pm</h2>
+
+        <!-- monday -->
+        <div class="session subject-0 english" style="grid-column: monday; grid-row: time-0900 / time-1000;">
+            <h3 class="subject">English</h3>
+            <span class="time">1h</span>
+            <span class="description">grammar</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <div class="session subject-1 art" style="grid-column: monday; grid-row: time-1000 / time-1100;">
+            <h3 class="subject">Art</h3>
+            <span class="time">1h</span>
+            <span class="description">dramatic art</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <div class="session subject-2 math" style="grid-column: monday; grid-row: time-1100 / time-1200;">
+            <h3 class="subject">Math</h3>
+            <span class="time">1h</span>
+            <span class="description">algebra</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <div class="session subject-3 physicaleducation" style="grid-column: monday-start / tuesday-end; grid-row: time-1400 / time-1600;">
+            <h3 class="subject">Physical Education</h3>
+            <span class="time">2h</span>
+            <span class="description">workout</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+
+        <!-- tuesday -->
+        <div class="session subject-4 french" style="grid-column: tuesday; grid-row: time-0830 / time-1000;">
+            <h3 class="subject">French</h3>
+            <span class="time">1h30min</span>
+            <span class="description">grammar</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <div class="session subject-5 health" style="grid-column: tuesday; grid-row: time-1000 / time-1030;">
+            <h3 class="subject">Health</h3>
+            <span class="time">30min</span>
+            <span class="description">education</span>
+            <span class="teacher">Teacher</span>
+        </div>
+        
+        <div class="session subject-6 spanish" style="grid-column: tuesday; grid-row: time-1030 / time-1130;">
+            <h3 class="subject">Spanish</h3>
+            <span class="time">1h</span>
+            <span class="description">vocabulary</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <!-- wednesday -->
+        <div class="session subject-7 science" style="grid-column: wednesday; grid-row: time-0830 / time-1130;">
+            <h3 class="subject">Science</h3>
+            <span class="time">2h</span>
+            <span class="description">biology</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <div class="session subject-8 economics" style="grid-column: wednesday; grid-row: time-1430 / time-1630;">
+            <h3 class="subject">Economics</h3>
+            <span class="time">2h</span>
+            <span class="description">test</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <!-- thursday -->
+        <div class="session subject-9 dramatics" style="grid-column: thursday; grid-row: time-0830 / time-1600;">
+            <h3 class="subject">Dramatics</h3>
+            <span class="time">all day</span>
+            <span class="description">exam</span>
+            <span class="teacher">Teacher</span>
+        </div>
+
+        <!-- friday -->
+        <div class="session subject-10 math" style="grid-column: friday-start; grid-row: time-0830 / time-0930;">
+            <h3 class="subject">Math</h3>
+            <span class="time">1h</span>
+            <span class="description">course</span>
+            <span class="teacher">Teacher</span>
+        </div>       
+        
+        <div class="session subject-11 woodshop" style="grid-column: friday; grid-row: time-0930 / time-1200;">
+            <h3 class="subject">Woodshop</h3>
+            <span class="time">9:30 - 12:00</span>
+            <span class="description">workshop</span>
+            <span class="teacher">Teacher</span>
+        </div>	
+
+        <!-- breaks -->
+        <div class="session breaks" style="grid-column: monday-start / friday-end; grid-row: time-0800 / time-0830;">
+            <h3 class="subject">Coffee time!</h3>
+        </div>
+
+        <div class="session breaks" style="grid-column: monday-start / friday-end; grid-row: time-1230 / time-1300;">
+            <h3 class="subject">Lunch!</h3>
+        </div>
+    </div>
+    <footer class = "footer">
+        <p>Copyright &copy; 2021</p>
+    </footer>
+</body>
+</html>
